@@ -9,7 +9,7 @@ interface ProductListProps {
 
 const ProductList: React.FC<ProductListProps> = ({ showProductDetail }) => {
   const { data: products, loading, error } = useFetchProducts();
-  const { addToCart } = useContext(CartContext);
+  const { dispatch } = useContext(CartContext);
 
   if (loading) {
     return <p className="text-center mt-8">Lädt...</p>;
@@ -53,7 +53,7 @@ const ProductList: React.FC<ProductListProps> = ({ showProductDetail }) => {
               </div>
               <div className="mt-6 flex space-x-2">
                 <button
-                  onClick={() => addToCart(product)}
+                  onClick={() => dispatch({ type: 'ADD_TO_CART', product })}
                   className="relative flex-1 items-center justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200"
                 >
                   In den Warenkorb

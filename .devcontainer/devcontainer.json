@@ -6,7 +6,10 @@
   "forwardPorts": [5173],
   "customizations": {
     "vscode": {
-      "extensions": ["dbaeumer.vscode-eslint"]
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "bradlc.vscode-tailwindcss"
+      ]
     },
     "settings": {
       "terminal.integrated.defaultProfile.linux": "/bin/bash"

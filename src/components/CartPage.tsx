@@ -3,7 +3,7 @@ import { CartContext } from '../contexts/CartContext';
 import { CheckIcon, QuestionMarkCircleIcon, XMarkIcon } from '@heroicons/react/20/solid';
 
 const CartPage: React.FC = () => {
-  const { cartItems, removeFromCart, clearCart, updateQuantity } = useContext(CartContext);
+  const { cartItems, dispatch } = useContext(CartContext);
 
   const totalPrice = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
@@ -64,8 +64,8 @@ const CartPage: React.FC = () => {
                           id={`quantity-${itemIdx}`}
                           name={`quantity-${itemIdx}`}
                           className="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500 sm:text-sm"
-                          value={item.quantity}
-                          onChange={(e) => updateQuantity(item.id, parseInt(e.target.value))}
+                          defaultValue={item.quantity}
+                          onClick={() => dispatch({ type: 'UPDATE_QUANTITY', productId: item.id, quantity: item.quantity })}
                         >
                           {[...Array(10)].map((_, i) => (
                             <option key={i} value={i + 1}>
@@ -78,7 +78,7 @@ const CartPage: React.FC = () => {
                           <button
                             type="button"
                             className="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500"
-                            onClick={() => removeFromCart(item.id)}
+                            onClick={() => dispatch({ type: 'REMOVE_FROM_CART', productId: item.id })}
                           >
                             <span className="sr-only">Entfernen</span>
                             <XMarkIcon aria-hidden="true" className="h-5 w-5" />
@@ -148,7 +148,7 @@ const CartPage: React.FC = () => {
             <div className="mt-4">
               <button
                 className="w-full rounded-md border border-transparent bg-red-500 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-50"
-                onClick={clearCart}
+                onClick={() => dispatch({ type: 'CLEAR_CART' })}
               >
                 Warenkorb leeren
               </button>

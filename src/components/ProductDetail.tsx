@@ -1,23 +1,19 @@
-'use client'
-
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Product } from '../types';
 import { CartContext } from '../contexts/CartContext';
-import { CheckIcon, QuestionMarkCircleIcon, ShieldCheckIcon } from '@heroicons/react/20/solid';
-import { RadioGroup } from '@headlessui/react';
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
-}
+import { CheckIcon, ShieldCheckIcon } from '@heroicons/react/20/solid';
 
 interface ProductDetailProps {
   product: Product;
 }
 
 const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
-  const { addToCart } = useContext(CartContext);
-
+  const { dispatch } = useContext(CartContext);
   const { title, description, price, category, image } = product;
+
+  const handleAddToCart = () => {
+    dispatch({ type: 'ADD_TO_CART', product });
+  };
 
   return (
     <div className="bg-white">
@@ -85,7 +81,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
                   type="button"
                   className="flex w-full items-center justify-center rounded-md border border-transparent bg-green-600 px-8 py-3 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-50"
                   aria-label="Produkt in den Warenkorb legen"
-                  onClick={() => addToCart(product)}
+                  onClick={handleAddToCart}
                 >
                   In den Warenkorb
                 </button>
